@@ -34,20 +34,16 @@ function displayResults(responseJson) {
   $('#results').removeClass('hidden');
 };
 
-function getYouTubeVideos(query, state,maxResults) {
+function getYouTubeVideos(query, maxResults) {
   const params = {
     
-    q: query,
+    stateCode: query,
     limit: maxResults,
     api_key: apiKey
   };
   const queryString = formatQueryParams(params)
-  let url = searchURL + '?';
-  if(state === "ALL"){
-    url = url + queryString;
-  } else {
-    url = url + `stateCode=${state}`+'&' + queryString;
-  }
+  const url = searchURL + '?' + queryString;
+  
   console.log(url);
 
   fetch(url)
@@ -68,9 +64,9 @@ function watchForm() {
     event.preventDefault();
     const searchTerm = $('#js-search-term').val();
     const maxResults = $('#js-max-results').val() - 1;
-    const stateTerm = $('#js-state-term').val();
     
-    getYouTubeVideos(searchTerm, stateTerm,maxResults);
+    
+    getYouTubeVideos(searchTerm, maxResults);
   });
 }
 
